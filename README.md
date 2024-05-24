@@ -20,3 +20,49 @@ III. Security Group with only SSH allowed
 
 everything is specified in main.tf, variable.tf and modules 
 
+once we run   
+            
+                         terraform init
+
+By running terraform init, you ensure that your Terraform environment is correctly set up, with all necessary dependencies downloaded and configured, allowing you to proceed with planning and applying your infrastructure changes.
+
+
+                       Terraform plan 
+
+
+By running terraform plan, you gain a clear understanding of the changes that will be made to your infrastructure, allowing you to make informed decisions and avoid unintended consequences.
+
+                         Terraform apply 
+
+  By using terraform apply, you ensure that the infrastructure changes defined in your configuration files are applied, creating, modifying, or destroying resources as necessary to match the desired state.
+
+step-2
+
+created mysql rds database . After creating it we need to check .
+i.e we need to get inside the database using this command
+
+mysql -u username -h -p <endpoint>
+password: xyz
+
+then we will enter into the mysql database
+
+
+after everything is perfect we need to destroy everything by 
+
+             terraform destroy 
+
+By using terraform destroy, you can efficiently remove all infrastructure components managed by Terraform, ensuring that your environment is cleaned up properly and that the state file remains accurate.
+
+TASK-2
+
+Shell/Bash scripting:
+a) A script to get the following:
+I. Current Time in UTC
+II. Current Time in IST
+III. A date time string for 10 days from current date
+
+this is above requirement 
+
+we have done that one once we excuted we get the output.
+
+ 
