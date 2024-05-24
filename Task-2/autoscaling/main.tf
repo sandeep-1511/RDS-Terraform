@@ -2,6 +2,7 @@ resource "aws_launch_configuration" "autoscaling_lc" {
   name          = "autoscaling_lc"
   image_id      = var.ami_id
   instance_type = var.instance_type
+  key_name       = var.key_name
   security_groups = [var.security_group]
 }
 
