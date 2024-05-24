@@ -29,3 +29,6 @@ variable "public_subnet" {
 variable "security_group" {
   description = "The security group ID for the auto-scaling group."
 }
+variable "key_name" {
+  description = "The name of the SSH key pair."
+}
