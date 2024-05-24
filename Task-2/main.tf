@@ -96,6 +96,7 @@ module "autoscaling" {
   max_size       = var.max_size
   public_subnet = aws_subnet.public_subnet.id
   security_group = aws_security_group.ssh_only.id
+  key_name       = "kumar"
 }
 
 module "rds" {
