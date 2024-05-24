@@ -72,4 +72,8 @@ variable "security_group_name" {
   type    = string
   default = "default_sg"
 }
+variable "public_key_path" {
+  description = "The path to the public key file for SSH access."
+  default     = "kumar.pem"
+}
 
