@@ -1,5 +1,8 @@
 # RDS-Terraform
 
+TASK-2          
+
+ 
 Firstly i have taken one EC2 instance .
 I installed terraform by following this commands from official terraform documentaion.
 
@@ -53,7 +56,7 @@ after everything is perfect we need to destroy everything by
 
 By using terraform destroy, you can efficiently remove all infrastructure components managed by Terraform, ensuring that your environment is cleaned up properly and that the state file remains accurate.
 
-TASK-2
+TASK-1
 
 Shell/Bash scripting:
 a) A script to get the following:
