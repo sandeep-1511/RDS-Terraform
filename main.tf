@@ -2,8 +2,6 @@ provider "aws" {
   region = var.aws_region
 }
 
-// Define VPC, subnets, internet gateway, NAT gateway, route tables, and security groups here
-
 resource "aws_vpc" "my_vpc" {
   cidr_block = var.vpc_cidr_block
 }
@@ -17,7 +15,7 @@ resource "aws_subnet" "public_subnet" {
 resource "aws_subnet" "private_subnet" {
   vpc_id            = aws_vpc.my_vpc.id
   cidr_block        = var.private_subnet_cidr_block
-  availability_zone = var.availability_zone
+  availability_zone = var.availability_zone2
 }
 
 resource "aws_internet_gateway" "gw" {
@@ -98,4 +96,13 @@ module "autoscaling" {
   security_group = aws_security_group.ssh_only.id
 }
 
-
+module "rds" {
+  source            = "./rds"
+  aws_region        = var.aws_region
+  db_name           = var.db_name
+  db_username       = var.db_username
+  db_password       = var.db_password
+  db_instance_class = var.db_instance_class
+  security_group    = aws_security_group.rds_sg.id
+  subnet_id         = [aws_subnet.public_subnet.id,aws_subnet.private_subnet.id]
+}
