@@ -65,7 +65,7 @@ II. Current Time in IST
 III. A date time string for 10 days from current date
 
 this is above requirement 
-
+we need give permission to the file chmod 777 to run .
 we have done that one once we excuted we get the output.
 
  
