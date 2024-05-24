@@ -21,7 +21,6 @@ variable "private_subnet_cidr_block" {
 variable "availability_zone" {
   description = "The availability zone to deploy the resources."
   default     = "us-east-1a" 
-}
 
 variable "availability_zone2" {
   description = "The availability zone to deploy the resources."
@@ -36,6 +35,7 @@ variable "instance_type" {
 variable "ami_id" {
   description = "The ID of the Amazon Machine Image (AMI) to use for the instances."
   default     = "ami-0bb84b8ffd87024d8" 
+}
 
 variable "min_size" {
   description = "The minimum number of instances in the auto-scaling group."
