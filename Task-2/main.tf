@@ -2,6 +2,8 @@ provider "aws" {
   region = var.aws_region
 }
 
+// Define VPC, subnets, internet gateway, NAT gateway, route tables, and security groups here
+
 resource "aws_vpc" "my_vpc" {
   cidr_block = var.vpc_cidr_block
 }
