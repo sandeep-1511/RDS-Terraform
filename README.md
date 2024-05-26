@@ -44,6 +44,8 @@ step-2
 created mysql rds database . After creating it we need to check .
 i.e we need to get inside the database using this command
 
+telnet mydb.chc8i4s8ayj7.us-east-1.rds.amazonaws.com 3306 to check weather instance is connected or not .
+
 mysql -u username -h -p <endpoint>
 password: xyz
 
