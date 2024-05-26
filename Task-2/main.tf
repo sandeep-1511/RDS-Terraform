@@ -2,35 +2,60 @@ provider "aws" {
   region = var.aws_region
 }
 
-// Define VPC, subnets, internet gateway, NAT gateway, route tables, and security groups here
+// Define VPC, subnets, internet gateway, NAT gateway, route tables, and security groups
 
 resource "aws_vpc" "my_vpc" {
   cidr_block = var.vpc_cidr_block
+
+  tags = {
+    Name = "my-vpc"
+  }
 }
 
 resource "aws_subnet" "public_subnet" {
-  vpc_id            = aws_vpc.my_vpc.id
-  cidr_block        = var.public_subnet_cidr_block
-  availability_zone = var.availability_zone
+  vpc_id                  = aws_vpc.my_vpc.id
+  cidr_block              = var.public_subnet_cidr_block
+  availability_zone       = var.availability_zone
+  map_public_ip_on_launch = true  
+
+  tags = {
+    Name = "public-subnet"
+  }
 }
 
 resource "aws_subnet" "private_subnet" {
   vpc_id            = aws_vpc.my_vpc.id
   cidr_block        = var.private_subnet_cidr_block
   availability_zone = var.availability_zone2
+
+  tags = {
+    Name = "private-subnet"
+  }
 }
 
 resource "aws_internet_gateway" "gw" {
   vpc_id = aws_vpc.my_vpc.id
+
+  tags = {
+    Name = "internet-gateway"
+  }
 }
 
 resource "aws_nat_gateway" "nat" {
   allocation_id = aws_eip.nat.id
   subnet_id     = aws_subnet.public_subnet.id
+
+  tags = {
+    Name = "nat-gateway"
+  }
 }
 
 resource "aws_eip" "nat" {
   vpc = true
+
+  tags = {
+    Name = "nat-eip"
+  }
 }
 
 resource "aws_route_table" "public" {
@@ -51,6 +76,24 @@ resource "aws_route_table_association" "public_subnet" {
   route_table_id = aws_route_table.public.id
 }
 
+resource "aws_route_table" "private" {
+  vpc_id = aws_vpc.my_vpc.id
+
+  route {
+    cidr_block     = "0.0.0.0/0"
+    nat_gateway_id = aws_nat_gateway.nat.id
+  }
+
+  tags = {
+    Name = "private-route-table"
+  }
+}
+
+resource "aws_route_table_association" "private_subnet" {
+  subnet_id      = aws_subnet.private_subnet.id
+  route_table_id = aws_route_table.private.id
+}
+
 resource "aws_security_group" "ssh_only" {
   vpc_id = aws_vpc.my_vpc.id
 
@@ -67,6 +110,10 @@ resource "aws_security_group" "ssh_only" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
+
+  tags = {
+    Name = "ssh-only-sg"
+  }
 }
 
 resource "aws_security_group" "rds_sg" {
@@ -76,7 +123,7 @@ resource "aws_security_group" "rds_sg" {
     from_port   = 3306
     to_port     = 3306
     protocol    = "tcp"
-    cidr_blocks = ["10.0.0.0/16"]  // Adjust as needed to allow traffic from your VPC
+    cidr_blocks = [var.vpc_cidr_block]  
   }
 
   egress {
@@ -84,6 +131,10 @@ resource "aws_security_group" "rds_sg" {
     to_port     = 0
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "rds-sg"
   }
 }
 
